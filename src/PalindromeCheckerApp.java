@@ -2,53 +2,72 @@ import java.util.Scanner;
 
 /**
  * ==========================================
- * MAIN CLASS - UseCase10PalindromeCheckerApp
+ * MAIN CLASS - UseCase11PalindromeCheckerApp
  * ==========================================
- * * Use Case 10: Normalized Palindrome Validation
+ * * Use Case 11: Object-Oriented Palindrome Service
  * * Description:
- * This class validates a palindrome after preprocessing
- * the input string.
- * * Normalization includes:
- * - Removing spaces and symbols
- * - Converting to lowercase
- * * This ensures the palindrome check is logical rather
- * than character-format dependent.
- * * Example:
- * "A man a plan a canal Panama"
+ * This class demonstrates palindrome validation using
+ * object-oriented design.
+ * * The palindrome logic is implemented inside a
+ * PalindromeService class.
+ * * This ensures:
+ * - Reusability
+ * - Readability
+ * - Separation of concerns
  * * @author Developer
- * @version 10.0
+ * @version 11.0
  */
-public class PalindromeCheckerApp {
+public class racecarPalindromeCheckerApp {
 
     /**
-     * Application entry point for UC10.
+     * Application entry point for UC11.
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        // Instantiate the service object
+        PalindromeService service = new PalindromeService();
+
         System.out.print("Input : ");
         String input = scanner.nextLine();
 
-        // Step 1: Normalization
-        // Replace all non-alphanumeric characters and convert to lowercase
-        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        // Call the service method
+        boolean result = service.checkPalindrome(input);
 
-        // Step 2: Iterative Palindrome Check
-        boolean isPalindrome = true;
-
-        // Compare characters from both ends using the hint provided
-        for (int i = 0; i < normalized.length() / 2; i++) {
-
-            // Compare symmetric characters
-            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
-                isPalindrome = false;
-                break; // Exit loop early if a mismatch is found
-            }
-        }
-
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Is Palindrome? : " + result);
 
         scanner.close();
+    }
+}
+
+/**
+ * Service class that contains palindrome logic.
+ */
+class PalindromeService {
+
+    /**
+     * Checks whether the input string is a palindrome.
+     * @param input Input string
+     * @return true if palindrome, false otherwise
+     */
+    public boolean checkPalindrome(String input) {
+        // Initialize pointers
+        int start = 0;
+        int end = input.length() - 1;
+
+        // Compare characters moving inward
+        while (start < end) {
+            // Compare characters at both ends
+            if (input.charAt(start) != input.charAt(end)) {
+                return false; // Mismatch found
+            }
+
+            // Move pointers inward
+            start++;
+            end--;
+        }
+
+        return true; // All characters matched
     }
 }
